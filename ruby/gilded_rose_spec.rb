@@ -1,39 +1,59 @@
 require File.join(File.dirname(__FILE__), 'gilded_rose')
 
+
+DUMMY_PRODUCT = "foo"
+AGED_BRIE = "Aged Brie"
+SULFURAS = "Sulfuras, Hand of Ragnaros"
+BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
+
 def updated_item( name:, sell_by:, quality: )
   items = [Item.new(name, sell_by, quality)]
   GildedRose.new(items).update_quality()
   items[0]
 end
 
-
-
 describe GildedRose do
 
   describe "#update_quality" do
     it "should not change the name" do
-      expect(updated_item(name: "foo", sell_by: 0, quality: 0).name).to eq "foo"
+      expect(updated_item(name: DUMMY_PRODUCT, sell_by: 0, quality: 0).name).to eq DUMMY_PRODUCT
     end
 
     it "should degrade quality twice as fast after sell by date" do 
-      expect(updated_item(name: "something", sell_by: -1, quality: 10).quality).to eq 8
+      expect(updated_item(name: DUMMY_PRODUCT, sell_by: -1, quality: 10).quality).to eq 8
     end
 
-    it "should not allow quality to go below zero"
+    it "should not allow quality to go below zero" do 
+      expect(updated_item(name: DUMMY_PRODUCT, sell_by: -1, quality: 0).quality).to eq 0
+    end
 
-    it "should increase the quality of aged brie over time"
+    it "should increase the quality of aged brie over time" do 
+      expect(updated_item(name: AGED_BRIE, sell_by: 10, quality: 0).quality).to eq 1
+    end
 
-    it "should not increase the quality beyond 50"
+    it "should not increase the quality beyond 50" do 
+      expect(updated_item(name: AGED_BRIE, sell_by:10, quality: 50).quality).to eq 50
+    end
 
-    it "should not change the quality of sulfuras"
+    it "should not change the quality of sulfuras" do 
+      expect(updated_item(name: SULFURAS, sell_by:10, quality: 40).quality).to eq 40
+    end
 
-    it "should allow sulfuras to maintain a quality of 80"
+    it "should allow sulfuras to maintain a quality of 80" do 
+      expect(updated_item(name: SULFURAS, sell_by: 10, quality: 80).quality).to eq 80
+    end
 
-    it "should increase the quality of a backstage pass by 2 ten days before the event"
+    it "should increase the quality of a backstage pass by 2 ten days before the event" do 
+      expect(updated_item(name: BACKSTAGE_PASS, sell_by: 10, quality: 10).quality).to eq 12
+    end
 
-    it "should increase the quality of a backstage pass by 3 five days before the event"
+    it "should increase the quality of a backstage pass by 3 five days before the event" do 
+      expect(updated_item(name: BACKSTAGE_PASS, sell_by: 5, quality: 10).quality).to eq 13
+    end
 
-    it "should reduce the quality of a backstage pass to 0 after the event"
+    it "should reduce the quality of a backstage pass to 0 after the event" do 
+      expect(updated_item(name: BACKSTAGE_PASS, sell_by: 0, quality: 10).quality).to eq 0
+    end
 
     it "should degrade the quality of a conjured item doubly fast"
 
