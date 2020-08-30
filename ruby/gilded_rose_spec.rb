@@ -5,7 +5,8 @@ DUMMY_PRODUCT = "foo"
 AGED_BRIE = "Aged Brie"
 SULFURAS = "Sulfuras, Hand of Ragnaros"
 BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
-CONJURED_ITEM = "Conjured wand of awesomeness"
+CONJURED_WAND = "Conjured wand of awesomeness"
+CONJURED_AXE = "Conjured axe of chopping"
 
 def updated_item( name:, sell_by:, quality: )
   items = [Item.new(name, sell_by, quality)]
@@ -56,8 +57,12 @@ describe GildedRose do
       expect(updated_item(name: BACKSTAGE_PASS, sell_by: 0, quality: 10).quality).to eq 0
     end
 
-    it "should degrade the quality of a conjured item doubly fast" do 
-      expect(updated_item(name: CONJURED_ITEM, sell_by: 10, quality: 10).quality).to eq 8
+    it "should degrade the quality of a conjured wand doubly fast" do 
+      expect(updated_item(name: CONJURED_WAND, sell_by: 10, quality: 10).quality).to eq 8
+    end
+
+    it "should degrade the quality of a conjured axe doubly fast" do 
+      expect(updated_item(name: CONJURED_AXE, sell_by: 10, quality: 10).quality).to eq 8
     end
 
   end
