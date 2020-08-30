@@ -8,7 +8,7 @@ class GildedRose
   end    
 
   def decrease_item_quality( item) 
-    item.quality -= 1 
+    item.quality -= 1 if item.quality > 0 
   end
 
   def update_quality()
@@ -16,13 +16,13 @@ class GildedRose
       next if item.name == "Sulfuras, Hand of Ragnaros"
 
       if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
+        
           
           decrease_item_quality item
           if item.name.start_with?("Conjured")
             decrease_item_quality item
           end
-        end
+        
       else
         if item.quality < 50
           increase_item_quality item
@@ -46,9 +46,7 @@ class GildedRose
       if item.sell_in < 0
         if item.name != "Aged Brie"
           if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
               decrease_item_quality item
-            end
           else
             item.quality = item.quality - item.quality
           end

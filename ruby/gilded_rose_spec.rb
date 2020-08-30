@@ -66,7 +66,7 @@ describe GildedRose do
     end
 
     it "should not degrade a conjured item below zero" do 
-      expect(updated_item(name: CONJURED_AXE, sell_by: 0, quality: 1).quality).to eq 1
+      expect(updated_item(name: CONJURED_AXE, sell_by: 0, quality: 1).quality).to eq 0
     end
 
   end
