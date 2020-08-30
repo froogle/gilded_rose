@@ -8,7 +8,7 @@ class GildedRose
 
   BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
   AGED_BRIE = "Aged Brie"
-  SUFURAS = "Sulfuras, Hand of Ragnaros"
+  SULFURAS = "Sulfuras, Hand of Ragnaros"
   CONJURED_ITEM = "Conjured"
 
   def initialize(items)
