@@ -15,9 +15,7 @@ class GildedRose
   end
 
   def update_quality()
-    @items.each do |item|
-      next if item.name == SULFURAS
-      
+    @items.select {|item| item.name != SULFURAS}.each do |item|
       age_item item
       item.sell_in -= 1
       expire_item item if past_sell_by? item
@@ -29,7 +27,6 @@ private
   def conjured_item?(item)
     item.name.start_with?(CONJURED_ITEM)
   end
-
 
   def past_sell_by?(item)
     item.sell_in < 0
